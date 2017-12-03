@@ -1,0 +1,33 @@
+{
+    "mode": 1,
+    "cassandra": {
+        "contactPoints": [
+            "cdble-dev809.cisco.com",
+            "cdble-dev810.cisco.com",
+            "cdble-dev811.cisco.com"
+        ],
+        "username": "cassandra",
+        "password": "cassandra"
+    },
+    "authzAPI": {
+        "endpointURL": "http://localhost:8110"
+    },
+    "eventServiceAPI": {
+        "endpointURL": null,
+        "bufferMax": 1000,
+        "bufferIntervalMS": 5000
+    },
+    "ssueMetadata": {
+        "endpointURL": "http://localhost:8110",
+        "dataSourceEndpointURL": "http://localhost:8110"
+    },
+    "smartcare": {
+        "assessmentService": "http://v01app-dev401.cisco.com:8361/AssessmentService-dev401/",
+        "configArchiveService": "http://v01app-dev401.cisco.com:8351"
+    },
+	"entitlementAPI": {
+        "endpointURL" : "http://smart-dev.cisco.com/SmartEntAPI01",
+        "username": "SNTC",
+        "password" :"SUPSNTC123"
+    }
+}

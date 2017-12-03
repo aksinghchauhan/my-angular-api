@@ -1,0 +1,14 @@
+{
+    //values can be 1 for dev, 2 for QA, 3 for stage and 4 for prod
+    "mode": 1,
+    "cassandra": {
+        "contactPoints": [
+            "cdble-dev809.cisco.com",
+            "cdble-dev810.cisco.com",
+            "cdble-dev811.cisco.com"
+        ],
+        "username": "cassandra",
+        "password": "cassandra"
+    }
+    
+}

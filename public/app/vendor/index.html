@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="../../ajax/libs/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/cisco-font.css">
+<link rel="stylesheet" href="../../css/global.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="../../ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular-route.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular-resource.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script
+	src="../../ajax/libs/angular-translate/2.1.0/angular-translate.min.js"></script>
+<script
+	src="../../ajax/libs/angular-translate/2.1.0/angular-translate-loader-static-files.min.js"></script>
+<script src="../../ajax/libs/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script
+	src="../../ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+<script src="app.js"></script>
+<script src="../../css/js/index.js"></script>
+
+<link
+	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600'
+	rel='stylesheet' type='text/css'>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="../../css/css/style.css">
+
+
+</head>
+<body ng-app="jobpApp" ng-controller="jobpCtrl"
+	background="../../images/job1.jpg">
+	<h3 class="page-header">Vendor Details</h3>
+
+	<br>
+
+	<div class="row" style="margin-left: 30px;" ng-if="isListPage">
+		<ul class="col-sm-12 col-md-12 row">
+			<li class="thumbnail" ng-repeat="x in vendors"
+				style="margin-left: 20px;"><a href="#"
+				ng-click="getVendorDtl(x.id);"> <img
+					src="../../images/vendor/{{x.main_image}}" alt="{{x.place_name}}"
+					class="vendor-pic">
+			</a>
+
+				<h3>{{x.place_name}}</h3>
+				<div ng-style="{'background-color': color }" class="colorP"
+					style="background-color: rgb(91, 168, 41);">
+					<p>
+						<i class="fa fa-star"></i><span class="star_rating ng-binding">{{x.ratings}}</span>
+					</p>
+				</div>
+				<p>
+					<strong>{{x.address}}</strong>
+				</p>
+				<p>
+					<strong><span class="vendor-price">{{x.charges}} </span></strong>
+				</p>
+				<p>
+					Review : <strong><a ng-click="getReview(x.reviews)">{{x.reviews_count}}</a></strong>
+				</p>
+				<p>
+					{{x.about| limitTo:strLimit}}<span
+						ng-if="x.about.length > 50 && x.about.length != strLimit">
+						<a ng-click="showMore(x.about)">..Show more</a>
+					</span> <span ng-if="x.about.length == strLimit"> <a
+						ng-click="showLess()">..Show less</a>
+					</span>
+				</p></li>
+		</ul>
+	</div>
+	<div ng-if="isDetailpage"
+		ng-repeat="x in vendors | filter: {id: thisAlbum}"
+		style="margin: 30px;">
+		<table border="1">
+			<tr>
+				<td width="60%">
+					<!-- about hotel details -->
+					<table>
+						<tr>
+							<td><a ng-click="goback()">Back </a></td>
+						</tr>
+						<tr>
+							<td><img src="../../images/vendor/{{x.main_image}}"
+								style="top: -100px; width: 300px; height: 300px;"></td>
+						</tr>
+						<tr>
+							<td><h2>{{x.place_name}}</h2></td>
+						</tr>
+						<tr>
+							<td><span>{{x.address}}</span></td>
+						</tr>
+						<tr>
+							<td><p>{{x.charges}}</p></td>
+						</tr>
+						<tr>
+							<td><p>
+								<p>{{x.about}}</p>
+								</p></td>
+						</tr>
+					</table>
+				</td>
+
+				<td>
+					<!-- -enquiry rlated -->
+
+					<table>
+						<tr>
+							<td>Enter your request</td>
+						</tr>
+						<tr>
+							<td>Celebration Date: <input required="" name="questionDate"
+								ng-model="question.datestr" readonly="readonly"
+								class="datePickerInput form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+								placeholder="Select Date" type="text"></td>
+						</tr>
+						<tr>
+							<td>Guests*:<input
+								class="form-control ng-pristine ng-untouched ng-empty ng-valid-min ng-invalid ng-invalid-required ng-valid-maxlength"
+								value="30" min="30" maxlength="4" name="people"
+								ng-model="question.people" required="" placeholder="30"
+								type="number"></td>
+						</tr>
+						<tr>
+							<td>Mobile No*:<input
+								class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-pattern"
+								name="enquiry-mobile" ng-model="enquiryMobile"
+								ng-pattern="/^[+]?[0-9]{8,15}$/" required=""
+								placeholder="9999999999" type="text">
+							</td>
+						</tr>
+
+					</table>
+				</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+	</div>
+
+	<div ng-if="isReviewpage" ng-repeat="x in reviews"
+		style="margin: 30px;">
+		<a ng-click="goback()">Back</a>
+		<table style="margin-left: 20px;">
+			<tr>
+				<td>Reviews</td>
+				<td>{{x}}</td>
+				<!-- 				<td>Review by : {{x.name}}</td>
+ -->
+			</tr>
+		</table>
+
+	</div>
+</body>
+</html>

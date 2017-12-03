@@ -1,0 +1,149 @@
+@font-face {
+     font-family: 'CiscoSansTTBold';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.ttf')
+           format('truetype');
+}
+
+@font-face {
+     font-family: 'CiscoSansTTExtraLight';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTExtraLight.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTExtraLight.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTExtraLight.ttf')
+           format('truetype');
+}
+
+@font-face {
+     font-family: 'CiscoSansTTBold';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTBold.ttf')
+           format('truetype');
+}
+
+@font-face {
+     font-family: 'CiscoSansTTLight';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTLight.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTLight.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTLight.ttf')
+           format('truetype');
+}
+
+@font-face {
+     font-family: 'CiscoSansTTBold';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTRegular.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTRegular.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTRegular.ttf')
+           format('truetype');
+}
+
+@font-face {
+     font-family: 'CiscoSansTTThin';
+     src:
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTThin.woff2')
+           format('woff2'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTThin.woff')
+           format('woff'),
+          url('//www.cisco.com/web/fw/tools/ssue/apps/smartreport/resources/3.32.2.1/dist/app/fonts/cisco/CiscoSansTTThin.ttf')
+           format('truetype');
+}
+
+#devicedetails {
+     font-family: CiscoSansTTLight !important;
+     font-size: 16pt;
+}
+
+#tabtext {
+     font-family: Arial !important;
+     font-size: 12pt;
+     color: black !important;
+}
+
+#tabcount {
+     font-family: CiscoSansTTThin !important;
+     font-size: 25pt;
+}
+
+#devicedetails th {
+     position: relative;
+     left: 30px !important;
+     top: 20px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+     {
+     width: 12rem !important;
+     height: 8rem !important;
+     text-align: center !important;
+     padding-bottom: 1px !important;
+     outline: 0;
+}
+
+.nav-tabs>input {
+     font-family: Arial !important;
+     font-size: 12pt;
+     margin-top: 75px !important;
+     margin-left: 85px !important;
+}
+
+input::-moz-focus-inner {
+     border: 0;
+}
+
+.nav-tabs>li>a {
+     margin-right: 2px;
+     line-height: 1.42857;
+     border: 1px solid transparent;
+     border-radius: 4px 4px 0px 0px;
+     outline: 0px none;
+}
+
+
+
+
+
+.arrow-left {
+     border: 1px solid #696969;
+     border-width: 0 0 2px 2px;
+     width: 10px;
+     height: 10px;
+     line-height: 0;
+     font-size: 0;
+     -webkit-transform: rotate(-135deg);
+     -ms-transform: rotate(-135deg);
+     -o-transform: rotate(-135deg);
+     transform: rotate(-135deg);
+     margin-left: 40px;
+     margin-top:3px;
+}
+
+.arrow-down {
+     border: 1px solid #696969;
+     border-width: 0 0 2px 2px;
+     margin-left: 40px;
+     margin-top: 3px;
+     width: 10px;
+     height: 10px;
+     line-height: 0;
+     font-size: 0;
+     -webkit-transform: rotate(-45deg);
+     -ms-transform: rotate(-45deg);
+     -o-transform: rotate(-45deg);
+     transform: rotate(-45deg);
+}

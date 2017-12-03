@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manage User</title>
+<script
+	src="../../ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script
+	src="../../ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../../ajax/libs/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
+
+<script
+	src="../../ajax/libs/angular-translate/2.1.0/angular-translate.min.js"></script>
+<script src="../../ajax/libs/angular-busy/4.1.3/angular-busy.min.js"></script>
+<link rel="stylesheet"
+	href="../../ajax/libs/angular-busy/4.1.3/angular-busy.min.css">
+
+<link href="../../ajax/libs/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" href="../../css/cisco-font.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="manageUsersApp" ng-controller="ManageUserViewCtrl">
+	<div class="container" style="width: 99%">
+		<form id="addUserForm"name="addForm" ng-submit="onConfirm(addForm.$valid)" novalidate>
+
+			<!--  Common section to diplay error or progress -->
+
+			<div align="center" valign="center"
+				cg-busy="{promise:manageUserpromise,message:'',backdrop:true,delay:0,minDuration:0}">
+			</div>			
+
+			<!--  ADD USER ACTION  -->
+			<div id="addUser" ng-if="isAddUser">
+
+			<div ng-if="isSuccessMsg && !iserrorMsg" class="alert alert-success"
+				style="padding: 3px;">
+				<span translate="ADDED_SUCC_MSG"></span>
+			</div>
+
+			<div ng-if="isFailedMsg && !iserrorMsg" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="ADDED_FAILED_MSG"></span>
+			</div>
+
+			<div ng-if="invalidInput" class="alert alert-danger"
+				style="padding: 3px;">
+				<span>{{inputNullMsg}}</span>
+			</div>
+
+			<div ng-if="iserrorMsg && !isCcoidNull && !isErrorFlag " class="alert alert-danger"
+				style="padding: 3px;">
+				<span ng-bind-html="errorMsg"></span>
+				<button ng-if="isUrlPresent" type="button" class="btn-link"
+					ng-click="redirectToLink()" id="link">
+					<span translate="SELF_SRVC_TOOL"></span>
+				</button>
+			</div>
+			<div ng-show="isCcoidNull" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="VALIDATE_CCOID"></span>
+			</div>
+			<div ng-show="submitted && isErrorFlag" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="VALIDATE_FORMFIELD"></span>
+			</div>
+			<div ng-show="isErrorFlag" >
+			<div><span class="error" ng-show=" !addForm.fullName.$error.required && submitted && !addForm.fullName.$valid"
+								translate="NOT_VALID_NAME"> </span>
+			</div>
+			<div><span class="error" ng-show=" !addForm.mail.$error.required && submitted && !addForm.mail.$valid"
+								translate="NOT_VALID_EMAIL"> </span>
+			</div>					 
+			<div><span class="error" ng-show=" !addForm.phoneNumber.$error.required && submitted && !addForm.phoneNumber.$valid"
+								translate="NOT_VALID_PHNO"> </span> 
+			</div>					
+			 <div><span class="error" ng-show="!addForm.zip.$error.required && submitted && !addForm.zip.$valid"
+								translate="NOT_VALID_ZIP"> </span> 
+			</div>
+			</div>
+
+				<table class="table">
+					<tr>
+						<td nowrap="nowrap"><span class="heading"
+							translate="ENTER_CCOID"></span></td>
+						<td><div class="input-group" style="width: 552px">
+								<input id="addid" style="height:31px" class="form-control" type="text" ng-model="ccoid"									
+									ng-minlength="1" ng-maxlength="50" name="ccoid" ng-pattern="/^[a-zA-Z0-9@._-]{1,51}$/" 
+									ng-class="{highlight:addForm.ccoid.$error.required || addForm.ccoid.$error.minlength || addForm.ccoid.$error.maxlength }" required />
+							</div><BR>
+							<div>
+								<span class="error"
+								ng-show="addForm.ccoid.$dirty && addForm.ccoid.$error.pattern"
+								translate="NOT_VALID_USERID"> </span> 
+							</div>
+							</td>
+						<td>
+							<button type="button" id="verify" ng-click="verifyUser(ccoid);" ng-disabled="addForm.ccoid.$dirty && addForm.ccoid.$error.pattern">
+								<span translate="VERIFY"></span>
+							</button>
+						</td>
+						<td></td>
+					</tr>
+					
+					
+				</table>
+				<div id="details" ng-if="isDetailShown && !isSuccessMsg" class="form-group">
+					<table class="table">
+						<tr>
+							<td><span class="heading" translate="NAME"></span><span
+								ng-if="isfullNameEmpty" style="color: red">*</span></td>
+							<td><span class="value"> {{fullName}} </span><input
+								ng-if="isfullNameEmpty" type="text" class="form-control"
+								ng-model="userinput.fullName" name="fullName" required
+								ng-pattern='/^[a-zA-Z\s]*$/' ng-minlength="1" 
+								ng-maxlength="100" ng-trim="false"
+								ng-class="{highlight:submitted && (addForm.fullName.$error.required || addForm.fullName.$error.minlength || addForm.fullName.$error.maxlength ||!addForm.fullName.$valid || addForm.fullName.$error.pattern)}"></td>
+
+							<td><span class="heading" translate="EMAIL"></span><span
+								ng-if="isMailEmpty" style="color: red">*</span></td>
+							<td><span class="value"> {{mail}} </span><input
+								ng-if="isMailEmpty" type="email" class="form-control"
+								ng-model="userinput.mail" name="mail" required ng-minlength="1"
+								ng-maxlength="100" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" 
+								ng-class="{highlight:submitted && (addForm.mail.$error.required || addForm.mail.$error.minlength || addForm.mail.$error.maxlength || !addForm.mail.$valid || addForm.mail.$error.pattern)}">
+
+								
+								</td>
+						</tr>
+						<tr>
+							<td><span class="heading" translate="COMPANY"></span> <span
+								ng-if="isCompNameEmpty" style="color: red">*</span></td>
+							<td><span class="value">{{companyName}} </span> <textarea
+									ng-if="isCompNameEmpty" class="form-control"
+									ng-model="userinput.companyName" name="companyName" required
+									ng-minlength="1" ng-maxlength="300"
+									ng-class="{highlight:submitted && (addForm.companyName.$error.required || addForm.companyName.$error.minlength || addForm.companyName.$error.maxlength)}"></textarea></td>
+
+							<td><span class="heading" translate="BUIS_ADDRESS"></span><span
+								ng-if="isStreetEmpty" style="color: red">*</span></td>
+							<td><span class="value"> {{street}}&nbsp;{{street2}}
+							</span> <textarea ng-if="isStreetEmpty" class="form-control"
+									ng-model="userinput.street" name="street" required
+									ng-minlength="1" ng-maxlength="300"
+									ng-class="{highlight:submitted && (addForm.street.$error.required || addForm.street.$error.minlength || addForm.street.$error.maxlength)}"></textarea></td>
+
+						</tr>
+						<tr>
+
+							<td><span class="heading" translate="PHONENUMBER"></span><span
+								ng-if="isPhoneEmpty" style="color: red">*</span></td>
+							<td><span ng-if="!isPhoneEmpty" class="value">
+									{{phoneNumber}} </span><input ng-if="isPhoneEmpty" type="text"
+								ng-model="userinput.phoneNumber" class="form-control"
+								name="phoneNumber" required ng-minlength="1" ng-maxlength="100"
+								ng-pattern="/^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/"  
+								ng-class="{highlight:submitted && (addForm.phoneNumber.$error.required || addForm.phoneNumber.$error.minlength || addForm.phoneNumber.$error.maxlength || !addForm.phoneNumber.$valid || addForm.phoneNumber.$error.pattern)}">
+								
+								</td>
+
+							<td colspan="2"><span class="heading" ng-if="!isLevelEmpty" translate="ACCESS_LEVEL"></span>
+							<span  ng-if="!isLevelEmpty" style="padding-left: 26px;" class="value" >{{accessLevel}}</span> 
+							
+
+						</tr>
+						<tr>
+							<td><span class="heading" translate="CITY"></span><span
+								ng-if="isCityEmpty" style="color: red">*</span></td>
+							<td><span ng-if="!isCityEmpty" class="value">
+									{{city}} </span><input ng-if="isCityEmpty" class="form-control"
+								type="text" ng-model="userinput.city" name="city" required
+								ng-minlength="1" ng-maxlength="100"
+								ng-class="{highlight:submitted && (addForm.city.$error.required || addForm.city.$error.minlength || addForm.city.$error.maxlength || !addForm.city.$valid)}"></td>
+
+							<td><span class="heading" translate="ZIP"></span><span
+								ng-if="isPostalEmpty" style="color: red">*</span></td>
+							<td><span ng-if="!isPostalEmpty" class="value">
+									{{postalCode}} </span><input ng-if="isPostalEmpty"
+								class="form-control" type="text" ng-model="userinput.postalCode"
+								ng-minlength="1" ng-maxlength="100" name="zip" required
+								ng-pattern='/^[a-z0-9]{0,10}$/' 
+								ng-class="{highlight:submitted && (addForm.zip.$error.required || addForm.zip.$error.minlength || addForm.zip.$error.maxlength || !addForm.zip.$valid ||addForm.zip.$error.pattern)}">
+								
+								</td>
+						</tr>
+						<tr>
+						
+							<td><span class="heading" translate="STATE"></span></td>
+							<td><span ng-if="!isStateEmpty" class="value">
+									{{state}} </span><input ng-if="isStateEmpty" type="text"
+								ng-model="userinput.state" class="form-control" name="state"></td>
+
+							<td><span class="heading" translate="COUNTRY"></span><span
+								ng-if="isCountryEmpty" style="color: red">*</span></td>
+							<td><span ng-if="!isCountryEmpty" class="value">
+									{{country}} </span><input ng-if="isCountryEmpty" type="text"
+								ng-model="userinput.country" class="form-control" name="country"
+								required
+								ng-class="{highlight:submitted && (addForm.country.$error.required || addForm.country.$error.minlength || addForm.country.$error.maxlength)}"></td>
+						</tr>
+						<tr>
+							<td><span class="heading" translate="SEL_ROLE"></span></td>
+							<td><select ng-init="selectedName = roles[0]"
+								ng-model="selectedName" ng-change="changeRole(selectedName);"
+								class="form-control" ng-options="role for role in roles"></select>
+							</td>
+							<td colspan="3"><span ng-if="isPartnerAdmin"
+								class="alert alert-info" style="padding: 3px;"
+								translate="PREVLG_PART_ADMIN"></span> <span
+								ng-if="isPartnerUser" class="alert alert-info"
+								style="padding: 3px;" translate="PREVLG_PART_USER"></span></td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<div align="center">
+					<button type="button"  class="btn btn-info"
+						style="padding-top: 4px;" ng-click="onDestroyModalEvent()"
+						id="cancel">
+						<span translate="CANCEL"></span>
+					</button>
+					&nbsp;
+					<button id="Confirm" type="submit" class="btn btn-info"
+						style="padding-top: 4px;" ng-model="confimbtn"
+						style="border-radius: 9px; padding: 7px 12px; font-size: 15px;"
+						ng-disabled="isVerified ==false || iserrorMsg==true || isFailedMsg==true || isCcoidNull==true || isSuccessMsg"> 
+						
+						<span translate="CONFIRM"></span>
+					</button>
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<!--  EDIT USER ACTION  -->
+			<div id="editUser" ng-if="isEditUser" class="form-group">
+			
+			<div ng-if="isSuccessMsg && !iserrorMsg" class="alert alert-success"
+				style="padding: 3px;">
+				<span translate="EDIT_SUCC_MSG"></span>
+			</div>
+
+			<div ng-if="isFailedMsg && !iserrorMsg" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="EDIT_FAILED_MSG"></span>
+			</div>
+			
+			<!-- <div ng-if="isCustomerUser" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="EDIT_UNPRIVILAGED_MSG"></span>
+			</div> -->
+			<div ng-if="isSelfEditing" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="SELF_EDIT_MSG"></span>
+			</div> 
+			
+			<div ng-if="!isSuccessMsg && !isFailedMsg && !isSelfEditing">
+				<table>
+					<tr>
+						<td nowrap="nowrap"><span class="heading"
+							translate="USER_INFO"></span>
+						<td>&nbsp;
+								<span class="heading" translate="USER_ID"></span> <span
+									class="editvalue">{{userid}}</span>
+							</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<table class="table">
+								<tr>
+									<td nowrap="nowrap">
+											<span class="heading" translate="NAME"></span> <span
+												class="editvalue"> {{fullName}} </span>
+										</td>
+									<td nowrap="nowrap">
+											<span class="heading" translate="EMAIL"></span> <span
+												class="editvalue"> {{mail}} </span>
+										</td>
+								</tr>
+								<tr>
+									<td nowrap="nowrap">
+											<span class="heading" translate="COMPANY"></span><span
+												class="editvalue"><br> {{companyName}} </span>
+									</td>	
+									<td nowrap="nowrap">
+											<span class="heading" translate="PHONENUMBER"></span> <span
+												class="editvalue"> {{phoneNumber}} </span>
+									</td>																	
+									
+								</tr>
+								<tr>
+										
+									<td nowrap="nowrap" colspan="2">
+											<span class="heading" translate="BUIS_ADDRESS"></span> <span
+												class="editvalue"> {{street}}&nbsp;{{city}}, &nbsp;{{state}}&nbsp;{{country}}&nbsp;{{zip}}
+											</span>
+									</td>
+									
+								</tr>
+							</table>
+						</td>
+					</tr>					
+				</table>
+				
+				<table ng-if=" !isCustomerUser"> 
+						<tr>
+							<td nowrap="nowrap"><font color="BLACK"><span class="value" translate="SEL_ROLE"></span></font></td>
+							<td colspan="2"><select ng-init="selectedName = roles[0]"
+								ng-model="selectedName" ng-change="changeRole(selectedName);"
+								class="form-control" ng-options="role for role in roles"></select>
+							</td>
+							<td><span ng-if="isPartnerAdmin"
+								class="alert alert-info" style="padding: 3px;"
+								translate="PREVLG_PART_ADMIN"></span> <span
+								ng-if="isPartnerUser" class="alert alert-info"
+								style="padding: 3px;" translate="PREVLG_PART_USER"></span></td>
+						</tr>				
+				</table>
+			</div><br>
+				
+				<div align="center">
+					<button type="button" ng-hide="isFailedMsg || isSuccessMsg ||isCustomerUser || isSelfEditing" class="btn btn-info"
+						ng-click="onDestroyModalEvent()" id="cancel">
+						<span  translate="CANCEL"></span>
+					</button>
+					<button type="button" ng-show="isFailedMsg || isSuccessMsg ||isCustomerUser || isSelfEditing" class="btn btn-info"
+						ng-click="onDestroyModalEvent()" id="cancel">
+						<span  translate="OK"></span>
+					</button>
+					&nbsp;
+					<button type="button" ng-hide="isFailedMsg || isSuccessMsg ||isCustomerUser || isSelfEditing" class="btn btn-info" ng-click="onEditClick()"
+						id="Confirm" >
+						<span translate="EDIT"></span>
+					</button>
+				</div>
+			</div> 
+
+	<!--  DELETE USER ACTION  -->
+			<div id="deleteUser" ng-if="isDeletUser">
+			
+			<div ng-if="isSuccessMsg" class="alert alert-success"
+				style="padding: 3px;">
+				<span translate="DELETION_SUCC_MSG"></span>
+			</div>
+			<div ng-if="isSuccessMsg" style="padding: 3px;">
+			<p style="font-family: CiscoSansTTLight !important;font-size: 13pt;color:GREEN;">{{deletedCCOIds}}</p>
+			</div>
+			<div ng-if="confirmed && !isSelfDeletionOnly" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="DELETION_FAIL_MSG"></span>
+			</div>
+			<div ng-if="confirmed && isSelfDeletionOnly" class="alert alert-danger"
+				style="padding: 3px;">
+				<span translate="SELF_DELETION_FAIL_MSG"></span>
+			</div>
+			<div ng-if="isFailedMsg" style="padding: 3px;">
+			<p style="font-family: CiscoSansTTLight !important;font-size: 13pt;color:red;">{{failedToGetDeleteCCOIds}}</p>
+			</div>
+			<div ng-if="isSelfDeletion" 
+				style="padding: 3px; font-family: CiscoSansTTLight !important;color:red;">
+				<span translate="SELF_DELETION_MSG"></span>
+			</div>
+			
+				<div ng-if="!isSuccessMsg && !isSelfDeletion && !isFailedMsg">
+					<p><span class="editvalue" translate="DELETE_USER_CONFIRMATION"></span></p>
+					<br>
+					<p style="font-family: CiscoSansTTLight !important;font-size: 13pt;color:GREEN;">{{seletedUsers}}</p>
+				</div>
+				<br>
+				<div align="center">
+					<button type="button" ng-hide= "isSelfDeletion || isFailedMsg || isSuccessMsg" class="btn btn-info"
+						style="padding-top: 4px;" ng-click="onDestroyModalEvent()"
+						id="cancel">
+						<span  translate="CANCEL"></span>
+					</button>
+					<button type="button" ng-show= "isSelfDeletion || isFailedMsg || isSuccessMsg" class="btn btn-info"
+						style="padding-top: 4px;" ng-click="onDestroyModalEvent()"
+						id="cancel">
+						<span  translate="OK"></span>
+					</button>
+					&nbsp;
+
+					<button  ng-hide="isSelfDeletion || isFailedMsg || isSuccessMsg" id="Confirm" type="button" class="btn btn-info"
+						style="padding-top: 4px;border-radius: 9px; font-size: 15px;" ng-model="confimbtn"
+						 ng-click="deleteConfirm();"  >
+						<span translate="CONFIRM"></span>
+					</button>
+				</div>
+			</div>  
+
+
+</body>
+</html>
