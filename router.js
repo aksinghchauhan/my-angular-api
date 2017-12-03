@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var fooApi = require('./controllers/api/backend');
 
 var vendorApi = require('./controllers/api/vendorws');
+var connectApi = require('./controllers/connect');
 
 var app = module.exports = express();
 
@@ -22,4 +23,4 @@ app.get("/sr/api/getUserName", fooApi.getUserDetails);
 app.post("/sr/api/addDetails", fooApi.onAdd);
 
 app.get("/sr/api/getvendorlist", vendorApi.getvendorlist);
-//app.get("/sr/api/getvendorDetail", vendorApi.getvendorDetail);
+app.get("/sr/api/getPersitedValue", connectApi.getPersitedValue);

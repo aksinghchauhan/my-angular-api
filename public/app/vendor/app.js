@@ -2,15 +2,16 @@
 	'use strict';
 	angular
 		.module(
-			"jobpApp",
+			"vendorApp",
 			[ 'ngRoute', 'ngResource', 'ngSanitize', 'ngAnimate',
 				'ui.bootstrap', 'pascalprecht.translate' ])
+		/* This place we can have constant to give web service URL*/
 		.constant('VENDOR_CONSTANTS', {
 			"VENDORS_URL" : "/sr/api/getvendorlist",
 		})
-
+		/*  created factory to handle method */
 		.factory(
-			'fooService',
+			'vendorService',
 			[
 				'$http',
 				'$interpolate',
@@ -20,10 +21,6 @@
 						getVendors : function() {
 							return $http
 								.get(VENDOR_CONSTANTS.VENDORS_URL);
-						},
-						getVendorDtl : function(input) {
-							return $http
-								.get(VENDOR_CONSTANTS.VENDORS_DTL_URL);
 						}
 					};
 				} ])
@@ -33,18 +30,15 @@
 			[
 				'$scope',
 				'$routeParams',
-				'fooService',
-				function($scope, $routeParams, fooService) {
-					$scope.submitted = false;
-					$scope.userinput = {};
-					var input;
-					$scope.iserrorMsg = false;
-					$scope.isLogin = true;
-					$scope.ishome = false;
-					$scope.ifPaypal = false;
+				'vendorService',
+				function($scope, $routeParams, vendorService) {
 
-					$scope.isFileupload = false;
-					$scope.strLimit = 50;
+					//This is main entry inside controller
+
+					// by default list page will be displayed
+					$scope.isListPage = true;
+
+					$scope.strLimit = 50; /*show more/less count */
 					$scope.showMore = function(val) {
 						$scope.strLimit = val.length;
 					};
@@ -54,73 +48,36 @@
 						$scope.strLimit = 50;
 					};
 
-					$scope.vendors = fooService.getVendors().then(
+					/* vendors list to be fetched from backend*/
+					$scope.vendors = vendorService.getVendors().then(
 						function(response) {
 							$scope.vendors = response.data;
 							console.log('vendors list result =' + JSON.stringify($scope.vendors));
 						});
 
-					$scope.isListPage = true;
+					/* get details on click of each vendor */
 					$scope.getVendorDtl = function(id) {
 						$scope.isListPage = false;
 						$scope.isDetailpage = true;
 						console.log('id in controller =' + id);
 						$scope.thisAlbum = id;
-						/*fooService.getVendorDtl(id).then(
-							function(response) {
-								$scope.details = response.data;
-								console.log('vendors details =' + JSON.stringify($scope.details));
-							});*/
 
 					}
-
+					/*getting review for individual listing */
 					$scope.getReview = function(reviews) {
 						console.log('In getReview ');
 						$scope.isReviewpage = true;
 						$scope.isListPage = false;
-
 						$scope.reviews = reviews;
 					}
 
+					/* getting back to listing page */
 					$scope.goback = function() {
 						console.log('In goback ');
 						$scope.isListPage = true;
 						$scope.isReviewpage = false;
 						$scope.isDetailpage = false;
 					}
-					$scope.getStarted = function(isValid) {
-						if (isValid) {
-						} else {
-							$scope.isErrorFlag = true;
-						}
-					}
-
-
 				} ])
-		.config([ '$routeProvider', function($routeProvider) {
-			$routeProvider.when('/jobp', {
-				templateUrl : 'index.html',
-				controller : 'fooViewCtrl'
-			}).when('/sr/api/login', {
-				templateUrl : 'payment.html',
-				controller : 'fooViewCtrl'
-			}) /*
-					 * .otherwise({ redirectTo : '/foo' });
-					 */
-		} ])
-		.config(
-			[
-				'$translateProvider',
-				function($translateProvider) {
-					var enBundle = {
-						"CLEAR" : "Clear"
-						
-					};
 
-					$translateProvider.translations('en', enBundle);
-					$translateProvider.preferredLanguage('en');
-					$translateProvider.fallbackLanguage('en');
-					$translateProvider
-						.useSanitizeValueStrategy('sanitize');
-				} ]);
 })(angular);

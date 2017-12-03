@@ -1,0 +1,10 @@
+{
+	"mode": 1,
+	"cassandra": {
+		"contactPoints": [
+			"127.0.0.1"
+		],
+		"username": "cassandra",
+		"password": "cassandra"
+	}
+}

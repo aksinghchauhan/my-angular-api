@@ -8,8 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="../../ajax/libs/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../css/cisco-font.css">
-<link rel="stylesheet" href="../../css/global.css">
+
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,29 +21,18 @@
 <script src="../../ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
 <script
 	src="../../ajax/libs/angular-translate/2.1.0/angular-translate.min.js"></script>
-<script
-	src="../../ajax/libs/angular-translate/2.1.0/angular-translate-loader-static-files.min.js"></script>
 <script src="../../ajax/libs/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script
 	src="../../ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+<!-- controller js file -->
+
 <script src="app.js"></script>
-<script src="../../css/js/index.js"></script>
-
-<link
-	href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="../../css/css/style.css">
-
-
 </head>
-<body ng-app="jobpApp" ng-controller="jobpCtrl"
-	background="../../images/job1.jpg">
+<body ng-app="vendorApp" ng-controller="jobpCtrl">
 	<h3 class="page-header">Vendor Details</h3>
-
 	<br>
 
+	<!-- LIST PAGE START HERE -->
 	<div class="row" style="margin-left: 30px;" ng-if="isListPage">
 		<ul class="col-sm-12 col-md-12 row">
 			<li class="thumbnail" ng-repeat="x in vendors"
@@ -80,6 +68,9 @@
 				</p></li>
 		</ul>
 	</div>
+
+
+	<!-- DETAIL PAGE START HERE -->
 	<div ng-if="isDetailpage"
 		ng-repeat="x in vendors | filter: {id: thisAlbum}"
 		style="margin: 30px;">
@@ -145,13 +136,12 @@
 				</td>
 			</tr>
 		</table>
-
-
-
-
-
-
 	</div>
+
+
+
+
+	<!-- REVIEW PAGE START HERE -->
 
 	<div ng-if="isReviewpage" ng-repeat="x in reviews"
 		style="margin: 30px;">
