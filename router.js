@@ -24,3 +24,4 @@ app.post("/sr/api/addDetails", fooApi.onAdd);
 
 app.get("/sr/api/getvendorlist", vendorApi.getvendorlist);
 app.get("/sr/api/getPersitedValue", connectApi.getPersitedValue);
+app.get("/sr/api/getCityNames", vendorApi.getCityNames);
