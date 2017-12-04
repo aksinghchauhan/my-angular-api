@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<input id = "input" list = "datalist" type = "text" />
+
+<datalist id = "datalist">
+    <option value = "No. 1"></option>
+    <option value = "No. 2"></option>
+    <option value = "No. 3"></option>
+</datalist>
+
+<script>
+    var datalist = document.getElementById ("datalist");
+    var input = document.getElementById ("input");
+
+    input.addEventListener ("keyup", function (event) {
+        if (event.which === 1) {
+            alert (datalist.options[datalist.selectedIndex]); // Example
+        }
+    }, false);
+</script>
+</body>
+</html>
