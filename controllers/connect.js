@@ -7,13 +7,25 @@ var logger = require('./logger');
 
 var client = createClient(config.cassandra.contactPoints, config.cassandra.username, config.cassandra.password);
 
-//var client = new cassandra.Client({contactPoints: [config.cassandra.contactPoints], keyspace: 'smartreport'});
+var vendor_query = "SELECT * FROM report.vendor";
+var review_query = "SELECT * FROM report.reviews";
 
-
+//http://localhost:8110/sr/api/getPersitedValue?type=review
+//http://localhost:8110/sr/api/getPersitedValue?type=vendor
 module.exports.getPersitedValue = function(req, res) {
-	logger.log('info', 'SERVER::in getPersitedValue method ..');
+	logger.log('info', 'SERVER::in getPersitedValue method req.query.type ==' + JSON.stringify(req.query.type));
 
-	client.execute("SELECT * FROM report.vendor", [], {
+	var query = '';
+	var type = req.query.type;
+	if (undefined != type && type == 'vendor')
+		query = vendor_query;
+
+	if (undefined != type && type == 'review')
+		query = review_query;
+
+	logger.log('info', 'SERVER::in getPersitedValue method query ==' + query);
+
+	client.execute(query, [], {
 		prepare : true
 	}, function(error, result) {
 		if (error) {

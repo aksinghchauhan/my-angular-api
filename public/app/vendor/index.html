@@ -56,7 +56,10 @@
 					<strong><span class="vendor-price">{{x.charges}} </span></strong>
 				</p>
 				<p>
-					Review : <strong><a ng-click="getReview(x.reviews)">{{x.reviews_count}}</a></strong>
+					<strong><a ng-click="getReview(x.reviews)"
+						ng-if="x.reviews_count!=0">{{x.reviews_count}} Reviews</a>
+						<a ng-if="x.reviews_count==0"> 0 Reviews</a></strong> 
+
 				</p>
 				<p>
 					{{x.about| limitTo:strLimit}}<span
