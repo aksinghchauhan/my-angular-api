@@ -58,6 +58,19 @@ module.exports.getvendorlist = function(req, res) {
 	res.send(vendors);
 };
 
+module.exports.getCityNames = function(req,res)
+	{
+	var cities = [
+	              {"name":"Lucknow", "Code":"1"},
+	              {"name":"Kanpur", "Code":"2"},
+	              {"name":"Allahabad", "Code":"3"},
+	              {"name":"Rae Bareli", "Code":"4"},
+	              {"name":"Bareli", "Code":"5"},
+	              {"name":"Sitapur", "Code":"6"}
+	              ];
+	res.send(cities);
+	}
+
 module.exports.getLogin = function(req, res) {
 	logger.debug("Inside Alerts Router Handler");
 	logger.debug("req=" + JSON.stringify(req.query));
