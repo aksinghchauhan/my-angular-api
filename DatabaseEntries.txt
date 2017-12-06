@@ -1,0 +1,137 @@
+https://www.datastax.com/2012/01/getting-started-with-apache-cassandra-on-windows-the-easy-way
+
+C:\Program Files\DataStax-DDC\apache-cassandra\bin
+
+run cassandra
+
+localhost/127.0.0.1:9042
+
+then open cqlsh
+
+create keyspace report with replication={'class':'SimpleStrategy', 'replication_factor':1};
+
+___________________________________________________________________________________________________________________________________________
+use report;
+create table vendor
+(
+id int primary key,
+place_name varchar,
+address varchar,
+charges varchar,
+ratings varchar,
+main_image varchar,
+about varchar 
+);
+
+insert into vendor (id,place_name,address,charges,ratings,main_image,about)
+values (1,'The Park Inn','The Park Inn,Lucknow','1200 per plate','4.2','The_Park_Inn.jpg','A hotel is an establishment that provides paid lodging on a short-term basis. Facilities provided may range from a modest-quality mattress in a small room to large suites with bigger, higher-quality');
+
+insert into vendor (id,place_name,address,charges,ratings,main_image,about)
+values (2,'Lotus Inn','Lotus,Lucknow','1000 per plate','3.2','Lotus_Inn.jpg','Lotus Inn is an establishment that provides paid lodging on a short-term basis. Facilities provided may range from a modest-quality mattress in a small room to large suites with bigger, higher-quality');
+
+
+insert into vendor (id,place_name,address,charges,ratings,main_image,about)
+values (3,'Awadh clarks Inn','Awaadh Clarks,Lucknow','800 per plate','2.2','Awadh_clarks_Inn.jpg','LAwadh clarks Inn facilities provided may range from a modest-quality mattress in a small room to large suites with bigger, higher-quality');
+
+insert into vendor (id,place_name,address,charges,ratings,main_image,about)
+values (4,'ABC Hotel','Kaisarganj,Lucknow','600 per plate','4.2','ABC_Hotel.jpg','ABC hotel facilities provided may range from a modest-quality mattress in a small room to large suites with bigger, higher-quality');
+
+___________________________________________________________________________________________________________________________________________
+
+create table reviews
+(
+id int primary key,
+vendor_id int,
+review varchar,
+review_by varchar,
+review_date varchar
+);
+
+------------------------reviews------------------------
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (1,1,'Hotel is good.','abc','2017-11-01');
+
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (2,1,'Hotel is in good location.','aaa aa','2017-11-01');
+
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (3,1,'Nice Party hall','cds','2017-11-01');
+
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (4,2,'AAA Hotel is good.','abc','2017-11-01');
+
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (5,2,'BBB Hotel is in good location.','aaa aa','2017-11-01');
+
+insert into reviews (id,vendor_id,review,review_by,review_date)
+values (6,2,'CCC  Nice Party hall','cds','2017-11-01');
+
+___________________________________________________________________________________________________________________________________________
+
+
+
+create table cities
+(
+cityId int primary key,
+cityName varchar
+);
+
+insert into cities (cityId, cityName)
+values (1,'Lucknow');
+
+insert into cities (cityId, cityName)
+values (2,'Allahabaad');
+
+insert into cities (cityId, cityName)
+values (3,'Kanpur');
+
+insert into cities (cityId, cityName)
+values (4,'Rae Bareli');
+
+insert into cities (cityId, cityName)
+values (5,'Sitapur');
+
+insert into cities (cityId, cityName)
+values (6,'Bareli');
+
+___________________________________________________________________________________________________________________________________________
+
+
+create table events
+(
+eventId int primary key,
+eventName varchar
+);
+
+
+insert into events(eventId, eventName)
+values(1,'Anniversary');
+
+insert into events(eventId, eventName)
+values(2,'Birthday');
+
+insert into events(eventId, eventName)
+values(3,'Marriage');
+
+insert into events(eventId, eventName)
+values(4,'Official party');
+
+insert into events(eventId, eventName)
+values(5,'Mundan Ceremony');
+
+insert into events(eventId, eventName)
+values(6,'Engagement');
+
+___________________________________________________________________________________________________________________________________________
+
+create table users
+(
+email varchar primary key,
+name text,
+contact text,
+password varchar,
+logindate date,
+usertype text
+);
+
+

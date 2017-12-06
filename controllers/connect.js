@@ -72,6 +72,29 @@ function createClient(contactPoints, username, password) {
 	return client;
 }
 
+
+
+module.exports.setPersitedValue = function(req, res) {
+	logger.log('info', 'SERVER::in getPersitedValue method =='+JSON.stringify(req.body.email));
+
+	client.execute('INSERT INTO smartreports.smartwork (id,filename) VALUES (now(), ?)', [ filename ],
+			function(err) {
+				if (err) {
+					res.status(500).send({
+						msg : 'Request:insertNewRecord could not be processed due to an internal error' + err
+					});
+				} else {
+					console.log('success!');
+					res.json("New record successfully inserted in database!");
+				}
+			});
+	var jsonString ;
+
+	
+	
+	res.json("SUCCESSE");
+}
+
 var addData = function(filename) {
 	logger.log('info', 'SERVER::in insertNewRecord method ..' + filename);
 
