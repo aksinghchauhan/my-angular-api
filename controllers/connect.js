@@ -5,8 +5,12 @@ var cassandra = require('cassandra-driver');
 var config = require('./db.json');
 var logger = require('./logger');
 
+
 var client = createClient(config.cassandra.contactPoints, config.cassandra.username, config.cassandra.password);
 
+module.exports.getClient = function() { 
+	return client;
+}
 var vendor_query = "SELECT * FROM report.vendor";
 var review_query = "SELECT * FROM report.reviews";
 
@@ -39,6 +43,7 @@ module.exports.getPersitedValue = function(req, res) {
 		}
 	});
 }
+
 
 function createClient(contactPoints, username, password) {
 	console.log('in createClient method ..');

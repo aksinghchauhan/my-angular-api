@@ -8,7 +8,8 @@
 		/* This place we can have constant to give web service URL*/
 		.constant('VENDOR_CONSTANTS', {
 			"VENDORS_URL" : "/sr/api/getvendorlist",
-			"GET_DB_DATA_URL" : "/sr/api/getPersitedValue"
+			"GET_DB_DATA_URL" : "/sr/api/getPersitedValue",
+			"POST_VENDOR_DATA_URL" : "/app/vendor/registerVendor"
 		})
 		/*  created factory to handle method */
 		.factory(
@@ -26,6 +27,10 @@
 						getDBData : function(type) {
 							return $http
 								.get(VENDOR_CONSTANTS.GET_DB_DATA_URL + '?type=' + type);
+						},
+						registerVendor : function(inputData) {
+							return $http
+								.post(VENDOR_CONSTANTS.POST_VENDOR_DATA_URL, inputData);
 						}
 					};
 				} ])
@@ -33,15 +38,17 @@
 		.controller(
 			'jobpCtrl',
 			[
+				'$http',
 				'$scope',
 				'$routeParams',
 				'vendorService',
-				function($scope, $routeParams, vendorService) {
+				function($http, $scope, $routeParams, vendorService) {
 
 					//This is main entry inside controller
 
 					// by default list page will be displayed
-					$scope.isListPage = true;
+					$scope.isListPage = false;
+					$scope.isRegisterHotel = true;
 
 					$scope.strLimit = 50; /*show more/less count */
 					$scope.showMore = function(val) {
@@ -58,8 +65,8 @@
 						function(response) {
 							$scope.vendors = response.data;
 							console.log('vendors list result =' + JSON.stringify($scope.vendors));
-						});	 */
-					
+						});*/
+
 					/* get details on click of each vendor */
 					$scope.getVendorDtl = function(id) {
 						$scope.isListPage = false;
@@ -84,7 +91,7 @@
 						$scope.isDetailpage = false;
 					}
 
-					//data fetching from database
+					/*data fetching from database */
 					$scope.vendorList = vendorService.getDBData('vendor').then(
 						function(response) {
 							$scope.vList = response.data;
@@ -122,6 +129,150 @@
 								});
 						});
 
-				} ])
+
+
+					function cleanse(value, nullValue) {
+						return value == null || value.length == 0
+						|| value === undefined
+						|| value === "undefined" ? nullValue
+							: value;
+					}
+
+					$scope.submitted = false;
+
+					$scope.registerVendor = function(flag, vendor) {
+						console.log('In registerVendor .. ');
+						if (!flag) {
+							console.log('---Form is not valid Please check-----------');
+						} else {
+							var input = getInputToAdd(vendor);
+
+							//console.log('---getInputToAdd---='+JSON.stringify(input));
+
+							$scope.vendorResponse = vendorService
+								.registerVendor(input)
+								.then(
+									function(response) {
+										var result = response.data;
+										console.log('result =' + result)
+										if (result == 'SUCCESS') {
+											$scope.isSuccessMsg = true;
+											//$scope.addForm.$setPristine();
+											$scope.vendor ={};
+											$scope.vendor.image1.value ='';
+										}
+										if (result == 'FAILURE') {
+											$scope.isFailedMsg = true;
+										}										
+									});
+						}
+
+					}
+					function getInputToAdd(vendor) {
+						var imgBlob = {};
+
+						var main_imagevalue;
+						switch (vendor.main_image) {
+						case 1:
+							main_imagevalue = vendor.image1;
+							break;
+						case 2:
+							main_imagevalue = vendor.image2;
+							break;
+						case 3:
+							main_imagevalue = vendor.image3;
+							break;
+						case 4:
+							main_imagevalue = vendor.image4;
+							break;
+						case 5:
+							main_imagevalue = vendor.image5;
+							break;
+						case 6:
+							main_imagevalue = vendor.image6;
+							break;
+						case 7:
+							main_imagevalue = vendor.image7;
+							break;
+						case 8:
+							main_imagevalue = vendor.image8;
+							break;
+						case 9:
+							main_imagevalue = vendor.image9;
+							break;
+						case 10:
+							main_imagevalue = vendor.image10;
+							break;
+						default:
+							console.log('default');
+							//in case no radio button checked
+							main_imagevalue = vendor.image1;
+							break;
+						}
+
+						//in case image is not uploaded
+						if (undefined != main_imagevalue || main_imagevalue == null) {
+							if (undefined != vendor.image1) {
+								main_imagevalue = vendor.image1;
+							} else {
+								main_imagevalue = null;
+							}
+						}
+						var imgBlob1 ,
+							imgBlob2,
+							imgBlob3,
+							imgBlob4,
+							imgBlob5;
+						if (undefined != vendor.image1) {
+							imgBlob1 = vendor.image1;
+							imgBlob.blob1 = imgBlob1;
+						}
+
+						if (undefined != vendor.image2) {
+							imgBlob2 = vendor.image2; //dataURItoBlob
+							imgBlob.blob2 = imgBlob2;
+						}
+
+						if (undefined != vendor.image3) {
+							imgBlob3 = vendor.image3;
+							imgBlob.blob3 = imgBlob3;
+						}
+
+						if (undefined != vendor.image4) {
+							imgBlob4 = vendor.image4;
+							imgBlob.blob4 = imgBlob4;
+						}
+
+						if (undefined != vendor.image5) {
+							imgBlob5 = vendor.image5;
+							imgBlob.blob5 = imgBlob5;
+						}
+						var input = {};
+						input.vendor = vendor;
+						input.imgBlobs = imgBlob;
+						input.main_imagev = main_imagevalue;
+
+						console.log('input.main_imagev ==>' + input.main_imagev);
+						return input;
+					}
+				} ]).directive("fileread", [
+		function() {
+			return {
+				scope : {
+					fileread : "="
+				},
+				link : function(scope, element, attributes) {
+					element.bind("change", function(changeEvent) {
+						var reader = new FileReader();
+						reader.onload = function(loadEvent) {
+							scope.$apply(function() {
+								scope.fileread = loadEvent.target.result;
+							});
+						}
+						reader.readAsDataURL(changeEvent.target.files[0]);
+					});
+				}
+			}
+		} ]);
 
 })(angular);

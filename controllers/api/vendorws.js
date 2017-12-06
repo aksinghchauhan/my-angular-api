@@ -2,6 +2,9 @@ var logger = require('winston');
 var express = require('express');
 var app = express();
 var multer = require('multer');
+var CircularJSON = require('circular-json');
+var connect = require('../connect.js');
+var uuid = require('node-uuid');
 
 module.exports.getvendorlist = function(req, res) {
 	var vendors = [ {
@@ -58,26 +61,63 @@ module.exports.getvendorlist = function(req, res) {
 	res.send(vendors);
 };
 
-module.exports.getCityNames = function(req,res)
-	{
+module.exports.getCityNames = function(req, res) {
 	var cities = [
-	              {"name":"Lucknow", "Code":"1"},
-	              {"name":"Kanpur", "Code":"2"},
-	              {"name":"Allahabad", "Code":"3"},
-	              {"name":"Rae Bareli", "Code":"4"},
-	              {"name":"Bareli", "Code":"5"},
-	              {"name":"Sitapur", "Code":"6"}
-	              ];
+		{
+			"name" : "Lucknow",
+			"Code" : "1"
+		},
+		{
+			"name" : "Kanpur",
+			"Code" : "2"
+		},
+		{
+			"name" : "Allahabad",
+			"Code" : "3"
+		},
+		{
+			"name" : "Rae Bareli",
+			"Code" : "4"
+		},
+		{
+			"name" : "Bareli",
+			"Code" : "5"
+		},
+		{
+			"name" : "Sitapur",
+			"Code" : "6"
+		}
+	];
 	res.send(cities);
-	}
+}
 
 module.exports.getLogin = function(req, res) {
 	logger.debug("Inside Alerts Router Handler");
 	logger.debug("req=" + JSON.stringify(req.query));
 	var name = req.query.first_name + " " + req.query.last_name;
 	var email = req.query.email;
-
-	// add db code
 	res.json("success");
 };
 
+module.exports.registerVendor = function(req, res) {
+	var obj = req.body.vendor;
+	logger.log('info', "Value in DB registerVendor" + JSON.stringify(req.body.vendor));
+	
+	var client = connect.getClient();
+	client.execute('INSERT INTO report.vendor_registration '
+	+ ' (vendor_id,vendor_name,address,rate,description,phone,place,email,image1,image2,image3,image4,image5,'
+	+ ' image6,image7,image8,image9,image10,registration_date,main_image)'
+	+ ' values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [ uuid.v1(), obj.vendor_name, obj.address, obj.rate, obj.description,
+		obj.phone, obj.place, obj.email, obj.image1, obj.image2, obj.image3, obj.image4, obj.image5,
+		obj.image6, obj.image7, obj.image8, obj.image9, obj.image10, Date.now(),req.body.main_imagev ],
+		function(err) {
+			if (err) {
+				res.status(500).send({
+					msg : 'Method:registerVendor::Request:insertNewRecord could not be processed due to an internal error' + err
+				});
+			} else {
+				logger.log('info', "Successfully added vendor into DB table report.vendor_registration .");
+				res.json("SUCCESS");
+			}
+		});
+}
