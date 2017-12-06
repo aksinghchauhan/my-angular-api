@@ -1,70 +1,73 @@
 (function(angular) {
 	'use strict';
-	angular
-		.module(
-			"homePage",
-			[ 'ngRoute', 'ngResource', 'ngSanitize', 'ngAnimate',
-				'ui.bootstrap', 'pascalprecht.translate' ])
-		/* This place we can have constant to give web service URL*/
-		.constant('VENDOR_CONSTANTS', {
-			"CityNames" : "/sr/api/getCityNames",
-		})
-		/*  created factory to handle method */
-		.factory(
+	angular.module("homePage", [])
+	/* This place we can have constant to give web service URL */
+	.constant('VENDOR_CONSTANTS', {
+		"CityNames" : "/sr/api/getCityNames",
+		"GET_DB_DATA_URL" : "/sr/api/getPersitedValue",
+		"SET_DB_DATA_URL" : "/sr/api/setPersitedValue"
+	})
+	/* created factory to handle method */
+	.factory(
 			'vendorService',
 			[
-				'$http',
-				'$interpolate',
-				'VENDOR_CONSTANTS',
-				function($http, $interpolate, VENDOR_CONSTANTS) {
-					return {
-						getCities : function() {
-							return $http
-								.get(VENDOR_CONSTANTS.CityNames);
-						}
-					};
-				} ])
+					'$http',
+					'VENDOR_CONSTANTS',
+					function($http, VENDOR_CONSTANTS) {
+						return {
+							getCities : function() {
+								return $http.get(VENDOR_CONSTANTS.CityNames);
+							},
+							getDBData : function(type) {
+								return $http
+										.get(VENDOR_CONSTANTS.GET_DB_DATA_URL
+												+ '?type=' + type);
+							}
+							,
+							setDBData : function(input) {
+								return $http
+										.post(VENDOR_CONSTANTS.SET_DB_DATA_URL,input);
+							}
+						};
+					} ])
 
-		.controller(
+	.controller(
 			'selectFunction',
 			[
-				'$scope',
-				'$routeParams',
-				'vendorService',
-				function($scope, $routeParams, vendorService) {
+					'$scope',
+					'vendorService',
+					function($scope, vendorService) {
 
 
-					/* vendors list to be fetched from backend*/
-					$scope.cities = vendorService.getCities().then(
-						function(response) {
-							console.log('response.data ='+JSON.stringify(response.data));
-							$scope.cities = response.data;
-							console.log('Cities list result =' + JSON.stringify($scope.cities));
-						});
 
-					/* get details on click of each vendor */
-					$scope.getVendorDtl = function(id) {
-						$scope.isListPage = false;
-						$scope.isDetailpage = true;
-						console.log('id in controller =' + id);
-						$scope.thisAlbum = id;
+						$scope.onConfirm = function(formValid) {
+							if (formValid) {
+								/*var params = {};
+								params.email = $scope.userinput.email;
+								params.name = $scope.userinput.name;
+								params.password = $scope.userinput.password;*/
+								}
+							console.log('SignUp Data is to database ='
+									+ JSON.stringify($scope.userinput.email));
+							
+							var input = {};
+							input.data =$scope.userinput;
+							vendorService.setDBData($scope.userinput);
+							
+						};
+						$scope.cities = vendorService.getDBData('city').then(
+								function(response) {
+									$scope.cities = response.data;
+									console.log('Cities list from database ='
+											+ JSON.stringify($scope.vList));
+								});
+						$scope.events = vendorService.getDBData('event').then(
+								function(response) {
+									$scope.event = response.data;
+									console.log('Event list from database ='
+											+ JSON.stringify($scope.event));
 
-					}
-					/*getting review for individual listing */
-					$scope.getReview = function(reviews) {
-						console.log('In getReview ');
-						$scope.isReviewpage = true;
-						$scope.isListPage = false;
-						$scope.reviews = reviews;
-					}
-
-					/* getting back to listing page */
-					$scope.goback = function() {
-						console.log('In goback ');
-						$scope.isListPage = true;
-						$scope.isReviewpage = false;
-						$scope.isDetailpage = false;
-					}
-				} ])
+								});
+					} ])
 
 })(angular);

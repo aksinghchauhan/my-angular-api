@@ -5,81 +5,220 @@
     Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
-	<head>
-		<title>Plans Your Event</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-panels.min.js"></script>
-		<script src="js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel-noscript.css" />
-			<link rel="stylesheet" href="css/style.css" />
-		</noscript>
-		<script src="../../ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="../../ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-		<script src="../../ajax/libs/angularjs/1.5.3/angular-route.min.js"></script>
-		<script src="../../ajax/libs/angularjs/1.5.3/angular-resource.min.js"></script>
-		<script src="../../ajax/libs/angularjs/1.5.3/angular-sanitize.min.js"></script>
-		<script src="../../ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-		<script
-			src="../../ajax/libs/angular-translate/2.1.0/angular-translate.min.js"></script>
-		<script src="../../ajax/libs/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script
-			src="../../ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-		<!-- controller js file -->
-		
-		<script src="app.js"></script>
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
-	</head>
-	<body class="homepage" ng-app="homePage" ng-controller="selectFunction">
+<head>
+<title>Plans Your Event</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css'>
+<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+
+<script src="../../ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../../ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+
+<!-- <script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script
+	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
+<script src="js/skel.min.js"></script>
+<script src="js/overlay.js"></script>
+<script src="js/skel-panels.min.js"></script>
+<script src="js/init.js"></script>
+<link rel="stylesheet" href="css/overlayLogin.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet prefetch'
+	href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+<noscript>
+	<link rel="stylesheet" href="css/skel-noscript.css" />
+	<link rel="stylesheet" href="css/style.css" />
+</noscript>
+<!-- controller js file -->
+
+<script src="app.js"></script>
+<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+</head>
+<body class="homepage" ng-app="homePage" ng-controller="selectFunction">
 
 	<!-- Header -->
-		<div id="header">
-			<div class="container">
-					<div id="CompanyLogin" style="margin-top: 0px; width: 100%; align-content: flex-end;">
-						<a href="login.jsp" style="margin-right: 2%">User Login</a>
-						<a href="login.jsp">Sign Up</a>
+	<div id="header">
+		<div class="container">
+			<div id="CompanyLogin" style="margin-top: 0px; width: 100%;">
+				<a href="#loginScreen" class="login">Log In</a> <a
+					href="#loginScreen" class="login">Sign Up</a>
+			</div>
+
+
+
+			<!-- Logo -->
+
+			<div id="logo">
+				<span>&nbsp;</span>
+				<h1>
+					<a href="index.html">PlanMyParty.com</a>
+				</h1>
+				<span>&nbsp;</span>
+			</div>
+			<div id="loginScreen">
+
+				<div class="logmod">
+					<a href="#" class="cancel">&times;</a>
+					<div class="logmod__wrapper">
+						<span class="logmod__close">Close</span>
+						<div class="logmod__container">
+
+							<ul class="logmod__tabs">
+								<li data-tabtar="lgm-2"><a href="#">Login</a></li>
+								<li data-tabtar="lgm-1"><a href="#">Sign Up</a></li>
+							</ul>
+							<div class="logmod__tab-wrapper">
+								<div class="logmod__tab lgm-1">
+									<div class="logmod__heading">
+										<span class="logmod__heading-subtitle">Enter your
+											personal details <strong>to create an acount</strong>
+										</span>
+									</div>
+									<div class="logmod__form">
+										<form accept-charset="utf-8" name="addForm" ng-submit="onConfirm(addForm.$valid)" class="simform">
+											<div class="sminputs">
+												<div class="input string optional">
+													<!-- <label class="string optional" for="user-name">Email*</label> -->
+													<input class="string optional" maxlength="255"
+														id="user-email" placeholder="Email" ng-model="userinput.email" type="email" size="50" />
+												</div>
+												<div class="input string optional">
+													<!-- <label class="string optional" for="user-name">Name*</label> -->
+													<input class="string optional" maxlength="255" ng-model="userinput.name"
+														id="user-name" placeholder="Name" type="text" size="50" />
+												</div>
+											</div>
+											<div class="sminputs">
+												<div class="input string optional">
+													<!-- <label class="string optional" for="user-pw">Password
+														*</label> --> <input class="string optional" maxlength="255"
+														id="user-pw" placeholder="Password" type="text" size="50" ng-model="userinput.password" />
+												</div>
+												<div class="input string optional">
+													<!-- <label class="string optional" for="user-pw-repeat">Repeat
+														password *</label> --> <input class="string optional" maxlength="255"
+														id="user-pw-repeat" placeholder="Repeat password"
+														type="text" size="50"  />
+												</div>
+											</div>
+											<div class="simform__actions">
+												<input class="sumbit"  name="commit" type="submit"
+													value="Create Account" > </input> <span
+													class="simform__actions-sidetext">By creating an
+													account you agree to our <a class="special" href="#"
+													target="_blank" role="link">Terms & Privacy</a>
+												</span>
+											</div>
+										</form>
+									</div>
+									<div class="logmod__alter">
+										<div class="logmod__alter-container">
+											<a href="#" class="connect facebook">
+												<div class="connect__icon">
+													<i class="fa fa-facebook"></i>
+												</div>
+												<div class="connect__context">
+													<span>Create an account with <strong>Facebook</strong></span>
+												</div>
+											</a> <a href="#" class="connect googleplus">
+												<div class="connect__icon">
+													<i class="fa fa-google-plus"></i>
+												</div>
+												<div class="connect__context">
+													<span>Create an account with <strong>Google+</strong></span>
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="logmod__tab lgm-2">
+									<div class="logmod__heading">
+										<span class="logmod__heading-subtitle">Enter your email
+											and password <strong>to sign in</strong>
+										</span>
+									</div>
+									<div class="logmod__form">
+										<form accept-charset="utf-8" action="#" class="simform">
+											<div class="sminputs">
+												<div class="input full">
+													<label class="string optional" for="user-name">Email*</label>
+													<input class="string optional" maxlength="255"
+														id="user-email" placeholder="Email" type="email" size="50" />
+												</div>
+											</div>
+											<div class="sminputs">
+												<div class="input full">
+													<label class="string optional" for="user-pw">Password
+														*</label> <input class="string optional" maxlength="255"
+														id="user-pw" placeholder="Password" type="password"
+														size="50" /> <span class="hide-password">Show</span>
+												</div>
+											</div>
+											<div class="simform__actions">
+												<input class="sumbit" name="commit" type="submit"
+													value="Log In" /> <span class="simform__actions-sidetext"><a
+													class="special" role="link" href="#">Forgot your
+														password?<br>Click here
+												</a></span>
+											</div>
+										</form>
+									</div>
+									<div class="logmod__alter">
+										<div class="logmod__alter-container">
+											<a href="#" class="connect facebook">
+												<div class="connect__icon">
+													<i class="fa fa-facebook"></i>
+												</div>
+												<div class="connect__context">
+													<span>Sign in with <strong>Facebook</strong></span>
+												</div>
+											</a> <a href="#" class="connect googleplus">
+												<div class="connect__icon">
+													<i class="fa fa-google-plus"></i>
+												</div>
+												<div class="connect__context">
+													<span>Sign in with <strong>Google+</strong></span>
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-				<!-- Logo -->
-					<div id="logo">
-						<span>&nbsp;</span>
-						<h1><a href="index.html">PlanMyParty.com</a></h1>
-						<span>&nbsp;</span>
-					</div>
-				
-					<div id="form">
-						<form action="" method="get">
-							 <input id = "event" class="event" list="Events" name="Events" value="Select Your Event" onfocus="this.value='';"
-							 onBlur="if(this.value == ''){this.value='Select Your Event';}">
-							 <datalist id="Events" >
-							 <option id="{{x.code}}" value="{{x.name}}" ng-repeat="x in cities">
-					<!--		 <option value="Birthday">
-							 <option value="Marriage">
-							 <option value="Anniversary">
-							 <option value="Wedding">
-							 <option value="Official GetTogether">-->
-							 </datalist>
-							 <input  id = "city" class="city" list="City" name="City" value="Select Your City" onfocus="this.value='';"
-							  onBlur="if(this.value == ''){this.value='Select Your City';}">
-							 <datalist id="City">
-							 <option value="Bareli">
-							 <option value="Lucknow">
-							 <option value="Allahabad">
-							 <option value="Raebareli">
-							 <option value="Kanpur">
-							 </datalist>
-							 <br/>
-							 <input class="buttonSubmit" type="button" value="GetStarted">
-						</form>						
-					</div>
-				<!-- 
+				</div>
+			</div>
+			<div id="cover"></div>
+			<div id="form">
+				<form action="" method="get">
+					<input id="event" class="event" list="Events" name="Events"
+						value="Select Your Event" onfocus="this.value='';"
+						onBlur="if(this.value == ''){this.value='Select Your Event';}">
+					<datalist id="Events">
+						<option id="{{x.cityid}}" value="{{x.cityname}}"
+							ng-repeat="x in cities">
+					</datalist>
+					<input id="city" class="city" list="City" name="City"
+						value="Select Your City" onfocus="this.value='';"
+						onBlur="if(this.value == ''){this.value='Select Your City';}">
+					<datalist id="City">
+						<option value="Bareli">
+						<option value="Lucknow">
+						<option value="Allahabad">
+						<option value="Raebareli">
+						<option value="Kanpur">
+					</datalist>
+					<br /> <input class="buttonSubmit" type="button" value="GetStarted">
+				</form>
+			</div>
+			<!-- 
 					<div id="nav">
 						<ul>
 							<li class="active"><a href="index.html">Home</a></li>
@@ -89,158 +228,192 @@
 							<li><a href="ListPackages.html">Packages</a></li>
 						</ul>
 					</div>Nav -->
-						<div>&nbsp;</div>
-						<div>&nbsp;</div>
-						<div>&nbsp;</div>
-			</div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
 		</div>
+	</div>
 	<!-- Header -->
-			
 	<!-- Main -->
-		<div id="main">
-			<div class="container">
-				<header>
-					<h2>Plan all parties with us - Best Budget Savior</h2>
-				</header>
-				<div class="row">
-					<div class="3u">
-						<section>
-							<a href="#" class="image full"><img src="images/pics01.jpg" alt="" /></a>
-							<p>Quisque dictum. Pellentesque viverra  enim. Integer nisl risus, sagittis convallis, rutrum id, elementum.</p>
-							<a href="#" class="button">Read More</a>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<a href="#" class="image full"><img src="images/pics11.jpg" alt="" /></a>
-							<p>Pellentesque viverra  enim. Tristique ante ut risus. Quisque dictum. Integer sagittis convallis elementum.</p>
-							<a href="#" class="button">Read More</a>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<a href="#" class="image full"><img src="images/pics12.jpg" alt="" /></a>
-							<p>Pellentesque viverra  enim. Quisque dictum. Integer nisl risus, sagittis convallis, rutrum id, elementum.</p>
-							<a href="#" class="button">Read More</a>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<a href="#" class="image full"><img src="images/pics13.jpg" alt="" /></a>
-							<p>Tristique ante ut risus. Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
-							<a href="#" class="button">Read More</a>
-						</section>
-					</div>
+	<div id="main">
+		<div class="container">
+			<header>
+				<h2>Plan all parties with us - Best Budget Savior</h2>
+			</header>
+			<div class="row">
+				<div class="3u">
+					<section>
+						<a href="#" class="image full"><img src="images/pics01.jpg"
+							alt="" /></a>
+						<p>Quisque dictum. Pellentesque viverra enim. Integer nisl
+							risus, sagittis convallis, rutrum id, elementum.</p>
+						<a href="#" class="button">Read More</a>
+					</section>
 				</div>
-				<div class="divider">&nbsp;</div>
-				<div class="row">
-				
-					<!-- Content -->
-						<div class="8u skel-cell-important">
-							<section id="content">
-								<header>
-									<h2>All needs in single place</h2>
-									<span class="byline">Places for all kinds of parties are available with us.</span>
-								</header>
-								<p><a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a></p>
-								<p>This is <strong>Monochromed</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
-								<a href="#" class="button">Read More</a>
-							</section>
-						</div>
-					<!-- /Content -->
-						
-					<!-- Sidebar -->
-						<div id="sidebar" class="4u">
-							<section>
-								<header>
-									<h2>India's Best Booking Engine</h2>
-									<span class="byline">Rated fastest growing booking engine.</span>
-								</header>
-								<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum. Maecenas luctus lectus at sapien. Consectetuer adipiscing elit.</p>
-								<ul class="default">
-									<li><a href="#">See Our Hotel Dealers</a></li>
-									<li><a href="#">See Our Bus Dealers</a></li>
-									<li><a href="#">See Our Railway Dealers</a></li>
-									<li><a href="#">See Our Package Dealers.</a></li>
-									<li><a href="#">See More</a></li>
-								</ul>
-							</section>
-						</div>
-					<!-- Sidebar -->
-						
+				<div class="3u">
+					<section>
+						<a href="#" class="image full"><img src="images/pics11.jpg"
+							alt="" /></a>
+						<p>Pellentesque viverra enim. Tristique ante ut risus. Quisque
+							dictum. Integer sagittis convallis elementum.</p>
+						<a href="#" class="button">Read More</a>
+					</section>
 				</div>
-			
+				<div class="3u">
+					<section>
+						<a href="#" class="image full"><img src="images/pics12.jpg"
+							alt="" /></a>
+						<p>Pellentesque viverra enim. Quisque dictum. Integer nisl
+							risus, sagittis convallis, rutrum id, elementum.</p>
+						<a href="#" class="button">Read More</a>
+					</section>
+				</div>
+				<div class="3u">
+					<section>
+						<a href="#" class="image full"><img src="images/pics13.jpg"
+							alt="" /></a>
+						<p>Tristique ante ut risus. Quisque dictum. Integer nisl
+							risus, sagittis convallis elementum.</p>
+						<a href="#" class="button">Read More</a>
+					</section>
+				</div>
 			</div>
+			<div class="divider">&nbsp;</div>
+			<div class="row">
+
+				<!-- Content -->
+				<div class="8u skel-cell-important">
+					<section id="content">
+						<header>
+							<h2>All needs in single place</h2>
+							<span class="byline">Places for all kinds of parties are
+								available with us.</span>
+						</header>
+						<p>
+							<a href="#" class="image full"><img src="images/pics02.jpg"
+								alt=""></a>
+						</p>
+						<p>
+							This is <strong>Monochromed</strong>, a responsive HTML5 site
+							template freebie by <a href="http://templated.co">TEMPLATED</a>.
+							Released for free under the <a href="http://templated.co/license">Creative
+								Commons Attribution</a> license, so use it for whatever (personal or
+							commercial) &ndash; just give us credit! Check out more of our
+							stuff at <a href="http://templated.co">our site</a> or follow us
+							on <a href="http://twitter.com/templatedco">Twitter</a>.
+						</p>
+						<a href="#" class="button">Read More</a>
+					</section>
+				</div>
+				<!-- /Content -->
+
+				<!-- Sidebar -->
+				<div id="sidebar" class="4u">
+					<section>
+						<header>
+							<h2>India's Best Booking Engine</h2>
+							<span class="byline">Rated fastest growing booking engine.</span>
+						</header>
+						<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus
+							at urna congue rutrum. Maecenas luctus lectus at sapien.
+							Consectetuer adipiscing elit.</p>
+						<ul class="default">
+							<li><a href="#">See Our Hotel Dealers</a></li>
+							<li><a href="#">See Our Bus Dealers</a></li>
+							<li><a href="#">See Our Railway Dealers</a></li>
+							<li><a href="#">See Our Package Dealers.</a></li>
+							<li><a href="#">See More</a></li>
+						</ul>
+					</section>
+				</div>
+				<!-- Sidebar -->
+
+			</div>
+
 		</div>
+	</div>
 	<!-- Main -->
 
 	<!-- Footer -->
-		<div id="footer">
-			<div class="container">
-				<div class="row">
-					<div class="3u">
-						<section>
-							<ul class="style1">
-								<li><img src="images/pics05.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-								<li><img src="images/pics06.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-								<li><img src="images/pics07.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-							</ul>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<ul class="style1">
-								<li class="first"><img src="images/pics08.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-								<li><img src="images/pics09.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-								<li><img src="images/pics10.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
-									<p class="posted">August 11, 2014  |  (10 )  Comments</p>
-								</li>
-							</ul>
-						</section>				
-					</div>
-					<div class="6u">
-						<section>
-							<header>
-								<h2>Aenean elementum</h2>
-							</header>
-							<p>In posuere eleifend odio. Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus, sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus.</p>
-							<ul class="default">
-								<li><a href="#">Pellentesque quis lectus gravida blandit.</a></li>
-								<li><a href="#">Lorem ipsum consectetuer adipiscing elit.</a></li>
-								<li><a href="#">Phasellus nec nibh pellentesque congue.</a></li>
-								<li><a href="#">Cras aliquam risus pellentesque pharetra.</a></li>
-								<li><a href="#">Duis non metus commodo euismod lobortis.</a></li>
-								<li><a href="#">Lorem ipsum dolor adipiscing elit.</a></li>
-							</ul>
-						</section>
-					</div>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="3u">
+					<section>
+						<ul class="style1">
+							<li><img src="images/pics05.jpg" width="78" height="78"
+								alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+							<li><img src="images/pics06.jpg" width="78" height="78"
+								alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+							<li><img src="images/pics07.jpg" width="78" height="78"
+								alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+						</ul>
+					</section>
+				</div>
+				<div class="3u">
+					<section>
+						<ul class="style1">
+							<li class="first"><img src="images/pics08.jpg" width="78"
+								height="78" alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+							<li><img src="images/pics09.jpg" width="78" height="78"
+								alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+							<li><img src="images/pics10.jpg" width="78" height="78"
+								alt="">
+								<p>Nullam non wisi a sem eleifend. Donec mattis libero eget
+									urna.</p>
+								<p class="posted">August 11, 2014 | (10 ) Comments</p></li>
+						</ul>
+					</section>
+				</div>
+				<div class="6u">
+					<section>
+						<header>
+							<h2>Aenean elementum</h2>
+						</header>
+						<p>In posuere eleifend odio. Quisque semper augue mattis wisi.
+							Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam
+							erat volutpat. Pellentesque tristique ante ut risus. Quisque
+							dictum. Integer nisl risus, sagittis convallis, rutrum id,
+							elementum congue, nibh. Suspendisse dictum porta lectus.</p>
+						<ul class="default">
+							<li><a href="#">Pellentesque quis lectus gravida
+									blandit.</a></li>
+							<li><a href="#">Lorem ipsum consectetuer adipiscing
+									elit.</a></li>
+							<li><a href="#">Phasellus nec nibh pellentesque congue.</a></li>
+							<li><a href="#">Cras aliquam risus pellentesque
+									pharetra.</a></li>
+							<li><a href="#">Duis non metus commodo euismod lobortis.</a></li>
+							<li><a href="#">Lorem ipsum dolor adipiscing elit.</a></li>
+						</ul>
+					</section>
 				</div>
 			</div>
 		</div>
+	</div>
 	<!-- Footer -->
 
 	<!-- Copyright -->
-		<div id="copyright">
-			<div class="container">
-				Design: <a href="fb.com">TEMPLATED</a> Images: <a href="fb.com">Unsplash</a> 
-			</div>
+	<div id="copyright">
+		<div class="container">
+			Design: <a href="fb.com">TEMPLATED</a> Images: <a href="fb.com">Unsplash</a>
 		</div>
+	</div>
 
-	</body>
+</body>
 </html>
