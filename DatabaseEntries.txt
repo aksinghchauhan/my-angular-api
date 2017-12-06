@@ -134,4 +134,30 @@ logindate date,
 usertype text
 );
 
+___________________________________________________________________________________________________________________________________________
 
+create table vendor_registration
+(
+	vendor_id UUID PRIMARY KEY,
+	vendor_name text,
+	address text,
+	rate text,
+	description text,
+	phone text,
+	place text,
+	email text,
+	main_image blob,
+	image1 blob,
+	image2 blob,
+	image3 blob,
+	image4 blob,
+	image5 blob,
+	image6 blob,
+	image7 blob,
+	image8 blob,
+	image9 blob,
+	image10 blob,
+	registration_date timestamp
+);
+
+___________________________________________________________________________________________________________________________________________
