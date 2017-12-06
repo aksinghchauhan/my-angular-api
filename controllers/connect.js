@@ -7,7 +7,7 @@ var logger = require('./logger');
 
 
 var client = createClient(config.cassandra.contactPoints, config.cassandra.username, config.cassandra.password);
-
+ 
 module.exports.getClient = function() { 
 	return client;
 }
