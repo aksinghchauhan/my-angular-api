@@ -20,12 +20,6 @@ app.use(bodyParser.urlencoded({
 	extended : true
 }));
 
-app.get("/sr/api/foo", fooApi.getFoo);
-app.get("/sr/api/login", fooApi.getLogin);
-app.get("/sr/api/sendMail", fooApi.sendMail);
-app.post("/sr/api/fileUpload", fooApi.fileUpload);
-app.get("/sr/api/getUserName", fooApi.getUserDetails);
-app.post("/sr/api/addDetails", fooApi.onAdd);
 
 app.get("/sr/api/getvendorlist", vendorApi.getvendorlist);
 app.get("/sr/api/getPersitedValue", connectApi.getPersitedValue);
