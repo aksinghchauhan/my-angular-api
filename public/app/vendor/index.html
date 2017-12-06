@@ -24,6 +24,12 @@
 <script src="../../ajax/libs/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script
 	src="../../ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+<link
+	href="../../ajax/libs/angular-date-picker/angular-datepicker.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="../../ajax/libsangular-date-picker/angular-datepicker.min.js"></script>
+
 <!-- controller js file -->
 
 <script src="app.js"></script>
@@ -57,8 +63,8 @@
 				</p>
 				<p>
 					<strong><a ng-click="getReview(x.reviews)"
-						ng-if="x.reviews_count!=0">{{x.reviews_count}} Reviews</a>
-						<a ng-if="x.reviews_count==0"> 0 Reviews</a></strong> 
+						ng-if="x.reviews_count!=0">{{x.reviews_count}} Reviews</a> <a
+						ng-if="x.reviews_count==0"> 0 Reviews</a></strong>
 
 				</p>
 				<p>
@@ -114,8 +120,10 @@
 							<td>Enter your request</td>
 						</tr>
 						<tr>
-							<td>Celebration Date: <input required="" name="questionDate"
-								ng-model="question.datestr" readonly="readonly"
+							<td>Celebration Date: <datepicker> <input
+									ng-model="date" type="text" /> </datepicker> <input required=""
+								name="questionDate" ng-model="question.datestr"
+								readonly="readonly"
 								class="datePickerInput form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
 								placeholder="Select Date" type="text"></td>
 						</tr>
@@ -158,6 +166,143 @@
 			</tr>
 		</table>
 
+	</div>
+
+	<div ng-if="isRegisterHotel" class="form-group">
+		<form id="addUserForm" name="addForm" novalidate
+			ng-submit="addForm.$valid && registerVendor(addForm.$valid,vendor)" novalidate>
+
+			<table
+				style="margin-left: 20px; padding: 3px; ! important border: 1px;"
+				class="table-striped">
+				<tr>
+					<td><div class="error"
+							ng-if="submitted==true && addForm.$invalid ">Please correct form fields</div>
+					<div class="alert alert-info" ng-if="isSuccessMsg">Vendor Registration Successful !</div>
+					<div class="alert alert-danger" ng-if="isFailedMsg">Vendor Registration Failed, Please check with Administrator !</div>
+					
+							
+							</td>
+				</tr>
+				<tr>
+					<td>Place/Hotel Name :*</td>
+					<td><input type="text" ng-model="vendor.vendor_name" name="hname"
+						class="form-control" required ng-class="{highlight:submitted && addForm.hname.$error.required}"/><br></td>
+
+					<td>Rate :</td>
+					<td><input type="text" ng-model="vendor.rate"
+						class="form-control" /><br></td>
+				</tr>
+				<tr>
+
+					<td>Email :*</td>
+					<td><input type="email" ng-model="vendor.email" required name="email" ng-minlength="1"
+								ng-maxlength="100"
+						class="form-control" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+						ng-class="{highlight:submitted && (addForm.email.$error.required || addForm.email.$error.minlength || addForm.email.$error.maxlength || !addForm.email.$valid || addForm.email.$error.pattern)}"><br></td>
+					<td>Phone :*</td>
+					<td><input type="text" ng-model="vendor.phone" required
+						name="phone" ng-minlength="0" ng-maxlength="10"
+						class="form-control" ng-pattern="/^(?:\d{10}|\w+@\w+\.\w{2,3})$/"
+						ng-class="{highlight:submitted && (addForm.phone.$error.required || addForm.phone.$error.minlength || addForm.phone.$error.maxlength || !addForm.phone.$valid || addForm.phone.$error.pattern)}">
+						<br> <!-- --></td>
+
+				</tr>
+				<tr>
+					<td>Place :*</td>
+					<td><input type="text" ng-model="vendor.place" required name="place"
+						class="form-control"  ng-class="{highlight:submitted && addForm.place.$error.required}"/><br></td>
+					<td>Address :</td>
+					<td align="left"><input type="text" ng-model="vendor.address"
+						class="form-control" /><br></td>
+				</tr>
+
+				<tr>
+					<td>Description :</td>
+					<td style="align: left"><textarea
+							ng-model="vendor.description" class="form-control"></textarea><br></td>
+				</tr>
+
+				<tr>
+					<td>Image :</td>
+					<td><input type="file" fileread="vendor.image1" /> <input
+						type="file" fileread="vendor.image2" /><input type="file"
+						fileread="vendor.image3" /> <input type="file"
+						fileread="vendor.image4" /> <input type="file"
+						fileread="vendor.image5" /> <br /></td>
+					<td>Image :</td>
+					<td><input type="file" fileread="vendor.image6" /> <input
+						type="file" fileread="vendor.image7" /><input type="file"
+						fileread="vendor.image8" /> <input type="file"
+						fileread="vendor.image9" /> <input type="file"
+						fileread="vendor.image10" /> <br /></td>
+				</tr>
+				<tr style="height: 100px;">
+					<td width="20%"><input id="billing-no" type="radio"
+						name="main_image" ng-model="vendor.main_image"
+						ng-value="1" /><img src="{{vendor.image1}}"
+						style="height: 100px; width: 100px !important" alt="Image 1...">
+					</td>
+
+					</td>
+					<td width="20%"><input id="billing-no" type="radio"
+						name="main_image" ng-model="vendor.main_image"
+						ng-value="2" /><img src="{{vendor.image2}}"
+						style="height: 100px; width: 100px !important" alt="Image 2...">
+					</td>
+					<td width="20%"><input id="billing-no" type="radio"
+						name="main_image" ng-model="vendor.main_image"
+						ng-value="3" /><img src="{{vendor.image3}}"
+						style="height: 100px; width: 100px !important" alt="Image 3..."></td>
+					<td width="20%"><input id="billing-no" type="radio"
+						name="main_image" ng-model="vendor.main_image"
+						ng-value="4" /><img src="{{vendor.image4}}"
+						style="height: 100px; width: 100px !important" alt="Image 4..."></td>
+					<td width="20%"><input id="billing-no" type="radio"
+						name="main_image" ng-model="vendor.main_image"
+						ng-value="5" /><img src="{{vendor.image5}}"
+						style="height: 100px; width: 100px !important" alt="Image 5..."></td>
+				</tr>
+				<tr style="height: 100px;">
+					<td><input id="billing-no" type="radio" name="main_image"
+						ng-model="vendor.main_image" ng-value="6" /><img
+						src="{{vendor.image6}}"
+						style="height: 100px; width: 100px !important" alt="Image 7..."></td>
+					<td><input id="billing-no" type="radio" name="main_image"
+						ng-model="vendor.main_image" ng-value="7" /><img
+						src="{{vendor.image7}}"
+						style="height: 100px; width: 100px !important" alt="Image 8..."></td>
+					<td><input id="billing-no" type="radio" name="main_image"
+						ng-model="vendor.main_image" ng-value="8" /><img
+						src="{{vendor.image8}}"
+						style="height: 100px; width: 100px !important" alt="Image 9..."></td>
+					<td><input id="billing-no" type="radio" name="main_image"
+						ng-model="vendor.main_image" ng-value="9" /><img
+						src="{{vendor.image9}}"
+						style="height: 100px; width: 100px !important" alt="Image 10..."></td>
+					<td><input id="billing-no" type="radio" name="main_image"
+						ng-model="vendor.main_image" ng-value="10" /><img
+						src="{{vendor.image10}}"
+						style="height: 100px; width: 100px !important" alt="Image 10..."></td>
+				</tr>
+				<tr>
+					<td>Note : <input id="billing-no" type="radio"
+						name="main_image" disabled  />
+						Select for Main image
+					</td>
+					<td style="align: right" colspan="3">
+
+
+						<button type="submit" id="Confirm" class="btn btn-info"
+							ng-click="submitted = true">Submit</button> &nbsp; &nbsp; &nbsp;
+						&nbsp;
+
+						<button id="Confirm" type="reset" class="btn btn-info"
+							ng-model="cancelbtn"
+							style="border-radius: 9px; padding: 7px 12px; font-size: 15px;">Cancel</button>
+				</tr>
+			</table>
+		</form>
 	</div>
 </body>
 </html>

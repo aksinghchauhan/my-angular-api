@@ -23,5 +23,5 @@ app.use(bodyParser.urlencoded({
 
 app.get("/sr/api/getvendorlist", vendorApi.getvendorlist);
 app.get("/sr/api/getPersitedValue", connectApi.getPersitedValue);
-//app.post("/app/vendor/registerVendor", connectApi.registerVendor);
+app.post("/app/vendor/registerVendor", vendorApi.registerVendor);
 app.get("/sr/api/getCityNames", vendorApi.getCityNames);
